@@ -39,6 +39,28 @@ jagg.template("home", function(inputs, outputs, jagg) {
     var dashboardUrl = dashboardBaseUrl + applicationName + "-" + selectedRevision;
     var encodedLabels = encodeURIComponent(stringify(selectedApplicationRevision.tags), "UTF-8");
     var encodedEnvs = encodeURIComponent(stringify(selectedApplicationRevision.runtimeProperties), "UTF-8");
+    var configTemplate = {"AAA":"aaa", "BBB":"bbb","CCC":"ccc","ddd":5};
+    var configString = '{' +
+                        	'"params": [{' +
+                        		'"param": "AAA",' +
+                        		'"value": "aaa"' +
+                        	'}, {' +
+                        		'"param": "BBB",' +
+                        		'"value": "bbb"' +
+                        	'}, {'+
+                        		'"param": "CCC", '+
+                        		'"value": "ccc"'+
+                        '	}],'+
+
+                        	'"schedule": [{'+
+                        		'"schedule": "Interval",'+
+                        		'"value": "3600"'+
+                        	'}, {'+
+                        		'"schedule": "Count",'+
+                        		'"value": "3"           '+
+                        	'}]'+
+                        '}';
+    var configJSON = JSON.parse(configString);
 %>
 
 <script>
@@ -67,7 +89,7 @@ jagg.template("home", function(inputs, outputs, jagg) {
             </div>
             <div class="col-md-3 breadcrumb-secondary">
                 <a href="/appmgt/site/pages/index.jag"><i class="fa fa-cubes visible-xs visible-lg"></i></a>
-                <span class="hidden-xs"><a href="/appmgt/site/pages/index.jag">Application Cloud</a></span>
+                <span class="hidden-xs"><a href="/appmgt/site/pages/index.jag">Integration Cloud</a></span>
             </div>
         </div>
     </div>
@@ -100,7 +122,8 @@ jagg.template("home", function(inputs, outputs, jagg) {
     <div class="right-pane">
     <!-- BOF App factory menu actionbar -->
     <div class="action-bar">
-        <a href="<%=jagg.getAbsoluteUrl("/site/pages/index.jag")%>" class="btn-action"  title="Back to Application listing">
+        Configure Parameters
+        <a href="<%=jagg.getAbsoluteUrl("/site/pages/index.jag")%>" class="btn-action"  title="Back to Integration listing">
                 <span class="fw-stack fw-lg btn-action-ico">
                     <i class="fw fw-circle-outline fw-stack-2x"></i>
                     <i class="fw fw-left-arrow fw-stack-1x"></i>
@@ -136,11 +159,12 @@ jagg.template("home", function(inputs, outputs, jagg) {
               </div>
           </div>
         </div>
-        <div class="row padding-bottom-xlg">
-          <div class="col-xs-12 col-md-9 col-lg-9">
+        <div class="row padding-bottom">
+        <h4>Task Parameters</h4>
+          <div class="col-xs-12 col-md-9 col-lg-4">
               <div class="block-general" style="background-color: #303030;">
                       <div class="col-xs-12 col-md-12 col-lg-9">
-                          <div class="btn-group pull-left version-number">
+                          <div class="btn-group pull-left version-number hide">
                               <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                               <span id="selected-version"><%=selectedRevision%> </span><span class="caret"></span>
                               </button>
@@ -156,7 +180,7 @@ jagg.template("home", function(inputs, outputs, jagg) {
                               %>
                               </ul>
                           </div>
-                          <div id="version-url-link" class="version-url">
+                          <div id="version-url-link" class="version-url hide">
                           <a href="<%=selectedApplicationRevision.deploymentURL%>" target="_blank"><span>
                           <b>URL : </b><%=selectedApplicationRevision.deploymentURL%></span></a>
                           </div>
@@ -177,18 +201,32 @@ jagg.template("home", function(inputs, outputs, jagg) {
                                       </a>
                                     </div>
                                 <%
-                                }else if(selectedApplicationRevision.status=='stopped' || selectedApplicationRevision.status=='inactive'){
+                               // }else if(selectedApplicationRevision.status=='stopped' || selectedApplicationRevision.status=='inactive'){
+                                }else if(true){
                                 %>
-                                    <button class="cu-btn cu-btn-md cu-btn-gr-dark btn-launch-app" id="btn-launchApp"
-                                    url="<%=selectedApplicationRevision.deploymentURL%>" disabled>Launch App</button>
-                                    <div class="btn-group ctrl-edit-button btn-edit-code">
-                                      <a type="button" class="btn cu-btn cu-btn-md cu-btn-blue" onclick="startApplication();">Start</a>
+                                    <!--button class="cu-btn cu-btn-md cu-btn-gr-dark btn-launch-app" id="btn-launchApp"
+                                    url="<%=selectedApplicationRevision.deploymentURL%>" disabled>Launch App</button-->
+                                    <div class="btn-group ctrl-edit-button btn-edit-code right">
+                                      <a type="button" class="btn cu-btn cu-btn-md cu-btn-blue right" onclick="startApplication();">Stop</a>
                                     </div>
+
+                          <div class="sec" id="scheduling-block">
+                               <form id="scheduling-params" method="post" action='<%=jagg.getAbsoluteUrl("/site/blocks/application/application.jag")%>' enctype="multipart/form-data">
+                               <%
+                                   for(var i=0; i < configJSON.params.length; i++){%>
+                                       <div class="form-group">
+                                           <label for="count"><%=configJSON.params[i].param%></label>
+                                           <input id="count" name="applicationName" type="text" class="form-control form-control-config" placeholder="Enter Loop Count" value = <%=configJSON.params[i].value %>></input>
+                                       </div>
+                                  <% } %>
+
+                               </form>
+                          </div>
                                 <%
 
                                 }else {
                                 %>
-                                    <div class="btn-group ctrl-edit-button btn-edit-code">
+                                    <div class="btn-group ctrl-edit-button btn-edit-code right">
                                       <a type="button" class="btn cu-btn cu-btn-md cu-btn-red" href="#yourlink">Error has occurred.</a>
                                     </div>
                                 <%
@@ -206,7 +244,7 @@ jagg.template("home", function(inputs, outputs, jagg) {
                               </div>
                           </a>
                           <a id="upload-revision" href="<%=appCreationPageBaseUrl%>?appTypeName=<%=application.applicationType%>&applicationKey=<%=applicationKey%>&encodedLabels=<%=encodedLabels%>&encodedEnvs=<%=encodedEnvs%>&newVersion=true&conSpecCpu=<%=conSpecCpu%>&conSpecMemory=<%=conSpecMemory%>">
-                              <div class="btn-create-version">
+                              <div class="btn-create-version hide">
                                   <span class="fw-stack fw-lg btn-action-ico">
                                      <i class="fw fw-circle-outline fw-stack-2x"></i>
                                      <i class="fw fw-add fw-stack-1x"></i>
@@ -214,7 +252,7 @@ jagg.template("home", function(inputs, outputs, jagg) {
                               </div>
                           </a>
                       </div>
-                        <div class="col-xs-12 col-md-9 col-lg-9">
+                        <div class="col-xs-12 col-md-9 col-lg-9 hide">
                             <div class="block-replica">
                                 <h3>Replicas</h3>
                                 <div class="block-replicas">
@@ -245,7 +283,7 @@ jagg.template("home", function(inputs, outputs, jagg) {
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xs-12 col-md-3 col-lg-3" data-toggle="tooltip" title="HTTP Monitoring Dashboard is not supported in this release. It will be available soon!">
+                        <div class="col-xs-12 col-md-3 col-lg-3 hide" data-toggle="tooltip" title="HTTP Monitoring Dashboard is not supported in this release. It will be available soon!">
                             <a class="block-anch" href="#" onclick="return false;" target="_blank">
                                 <div class="block-monitoring">
                                     <h3>HTTP Monitoring Dashboard</h3>
@@ -260,7 +298,7 @@ jagg.template("home", function(inputs, outputs, jagg) {
                     </div>
 
                 </div>
-          <div class="col-xs-12 col-md-3 col-lg-3">
+          <div class="col-xs-12 col-md-3 col-lg-3 hide">
               <div class="block-team pull-left">
                 <a class="block-anch" id="envVars" href="/appmgt/site/pages/envs.jag?applicationKey=<%=applicationKey%>&versionKey=<%=selectedApplicationRevision.hashId%>">
                   <h3>Env Variables</h3>
@@ -288,8 +326,31 @@ jagg.template("home", function(inputs, outputs, jagg) {
               </div>
           </div>
         </div>
-    </div><!-- /.container -->
-    </div>
+        <div class="row padding-bottom">
+            <h4 >Scheduling Parameter</h4>
+            <div class="col-xs-12 col-md-9 col-lg-4">
+                <div class="block-general" style="background-color: #303030;">
+                     <div class="col-xs-12 col-md-12 col-lg-9">
+                          <div class="sec" id="scheduling-block">
+                               <form id="scheduling-params" method="post" action='<%=jagg.getAbsoluteUrl("/site/blocks/application/application.jag")%>' enctype="multipart/form-data">
+                                    <div class="form-group">
+                                         <label for="count">Count </label>
+                                         <input id="count" name="applicationName" type="text" class="form-control form-control-config" placeholder value = ="Enter Loop Count" <%=configJSON.schedule.count %>></input>
+                                    </div>
+                                    <div class="form-group">
+                                         <label for="interval">Interval </label>
+                                         <input id="interval" name="applicationName" type="text" class="form-control form-control-config" placeholder="Enter time interval in seconds" value = <%=configJSON.schedule.interval %>></input>
+                                    </div>
+                                    <div class="btn-group ctrl-edit-button btn-edit-code right">
+                                         <a type="button" class="btn cu-btn cu-btn-md cu-btn-blue right" onclick="startApplication();">Schedule</a>
+                                    </div>
+                               </form>
+                          </div>
+                     </div>
+                </div>
+            </div>
+        </div><!-- /.container -->
+</div>
 
     <!-- --------------------------------------- Overlay ----------------------------------------- -->
     <div class="modal fade build-logs-modal" id="app_creation_progress_modal">

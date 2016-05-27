@@ -928,13 +928,13 @@ jagg.template("application", function (inputs, outputs, jagg) {
                     <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="upload-from-file"
                            checked="checked" class="custom-radio"> Upload from file system
                 </label>
-                <label class="radio-inline">
+                <label class="radio-inline hide">
                     <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="upload-from-url"
-                           class="custom-radio"> Upload from URL
+                           class="custom-radio hide"> Upload from URL
                 </label>
-		<label class="radio-inline">
+		<label class="radio-inline hide">
                     <input type="radio" name="inlineRadioOptions" id="inlineRadioSample" value="deploy-sample"
-                           class="custom-radio"> Deploy Sample App
+                           class="custom-radio hide"> Deploy Sample App
                 </label>
                 <%  if(isAppTypeBuildable == 'false'){ %>
                     <label class="radio-inline">
@@ -990,14 +990,14 @@ jagg.template("application", function (inputs, outputs, jagg) {
                 </div-->
             </div>
 
-            <div class="form-group">
+            <div class="form-group hide">
                 <label for="runtime">Runtime:
                     <i class="fa fa-question-circle help-tips" data-toggle="tooltip" data-placement="left" title="Select an appropriate runtime to run your application"></i>
                 </label>
                 <select name="runtime" id="runtime" class="form-control"></select>
             </div>
 
-			<div class="form-group">
+			<div class="form-group hide">
                 <label for="container">Container Specification: </label>
                 <select name="container" id="container" class="form-control" ></select>
             </div>
@@ -1020,7 +1020,7 @@ jagg.template("application", function (inputs, outputs, jagg) {
             </div>
 
             <div class="panel-group property-accordion" id="property-accordion">
-                    <div class="panel panel-default">
+                    <div class="panel panel-default hide">
                         <div class="panel-heading">
                             <h4 class="panel-title">
                                 <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
@@ -1054,7 +1054,7 @@ jagg.template("application", function (inputs, outputs, jagg) {
                         </div>
                     </div>
 
-                    <div class="panel panel-default">
+                    <div class="panel panel-default hide">
                         <div class="panel-heading">
                             <h4 class="panel-title">
                                 <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">

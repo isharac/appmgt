@@ -28,7 +28,7 @@ jagg.template("apptype/select", function(inputs, outputs, jagg) {
                 <span class="fw-stack fw-lg btn-action-ico">
                     <i class="fw fw-circle-outline fw-stack-2x"></i>
                     <i class="fw fw-left-arrow fw-stack-1x"></i>
-                </span> <span class="hidden-xs">Back to Application listing</span>
+                </span> <span class="hidden-xs">Back to Integration listing</span>
         </a>
     </div>
     <div class="container-fluid app-type-listing">

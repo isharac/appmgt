@@ -3,7 +3,7 @@
     "war":{"type":"war", "icon":"fw-java", "color":"app-color-one", "displayName":"Java Web Application", "buildable":"true", "extension":"war"},
     "php":{"type":"php", "icon":"fw-php", "color":"app-color-three", "displayName":"PHP Web Application", "buildable":"false", "extension":"zip"},
     "mss":{"type":"mss", "icon":"fw-service", "color":"app-color-two", "displayName":"Java Microservice", "buildable":"true", "extension":"jar"},
-    "car":{"type":"car", "icon":"fw-carbon", "color":"app-color-three", "displayName":"WSO2 ESB Application", "buildable":"true", "extension":"car"},
+    "car":{"type":"car", "icon":"fw-carbon", "color":"app-color-three", "displayName":"WSO2 ESB Integration", "buildable":"true", "extension":"car"},
     "carbon":{"type":"carbon", "icon":"fw-carbon", "color":"app-color-six", "displayName":"WSO2 Carbon Server", "buildable":"true", "extension":"car"},
     "jaggery":{"type":"jaggery", "icon":"fw-jaggery", "color":"app-color-six", "displayName":"WSO2 Jaggery Application", "buildable":"false", "extension":"zip"}
 }

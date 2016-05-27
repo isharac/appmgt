@@ -188,11 +188,11 @@ jagg.template("index", function(inputs, outputs, jagg) {
                 <i class="fw fw-add fw-stack-1x"></i>
             </span> <span class="hidden-xs">Create Application</span>
         </a>
-        <a href="<%=jagg.getAbsoluteUrl("/site/pages/newdatabase.jag")%>?isEdit=false" class="btn-action" data-toggle="tooltip" data-placement="top" title="Add New Database">
+        <a href="<%=jagg.getAbsoluteUrl("/site/pages/newdatabase.jag")%>?isEdit=false" class="btn-action hide" data-toggle="tooltip" data-placement="top" title="Add New Database">
             <span class="fw-stack fw-lg btn-action-ico">
                 <i class="fw fw-circle-outline fw-stack-2x"></i>
                 <i class="fw fw-add fw-stack-1x"></i>
-            </span> <span class="hidden-xs">Create Database</span>
+            </span> <span class="hidden-xs hide">Create Database</span>
         </a>
     </div>
     <div class="container-fluid">
@@ -202,7 +202,7 @@ jagg.template("index", function(inputs, outputs, jagg) {
     <% if (applications.length > 0 ) { %>
         <div class="row row-centered app-sort-bar">
             <div class="col-centered col-md-5 search">
-                <input type="text" class="form-control" id="search-apps" placeholder="Search applications">
+                <input type="text" class="form-control" id="search-apps" placeholder="Search integrations">
                 <i class="fa fa-2x fa-search" ></i>
             </div>
         </div>
@@ -210,9 +210,9 @@ jagg.template("index", function(inputs, outputs, jagg) {
         <div class="row row-centered">
             <div class="col-centered col-xs-10 col-sm-7  col-md-7 col-lg-6">
                 <div class="cloud-new-content">
-                    <h1>New to WSO2 Application Cloud ?</h1>
+                    <h1>New to WSO2 Integration Cloud ?</h1>
                     <a id="app-create-button" class="cu-btn cu-btn-md cu-btn-blue" href="/appmgt/site/pages/select-apptype.jag">
-                      Create your first application</a>
+                      Upload your first application</a>
                     <!--div class="help">
                         <i class="fa fa-2x fa-book"></i> Need help ? Read App creation guide first..
                     </div-->

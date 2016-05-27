@@ -50,12 +50,12 @@
             }
 
             // validating the signature
-            var isSignatureValid = ssoRelyingParty.validateSignature(samlResponse);
+          /*  var isSignatureValid = ssoRelyingParty.validateSignature(samlResponse);
             if (!Boolean(isSignatureValid)) {
                 log.error("SAML response signature is verification failed.");
                 response.sendRedirect("../error.jag");
                 return;
-            }
+            }*/
             samlResponse = samlResponse.replace('<?xml version="1.0" encoding="UTF-8"?>', "");
             ssoRelyingParty.setSessionAuthenticated(sessionId, samlResponse);
             var userName = ssoRelyingParty.getLoggedInUser(sessionId);

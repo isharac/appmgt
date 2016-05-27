@@ -108,7 +108,7 @@ jagg.template("header/default", function(inputs, outputs, jagg) {
         <div class="row">
             <div class="col-md-3 breadcrumb-secondary">
                 <a href="/appmgt/site/pages/index.jag"><i class="fa fa-cubes visible-xs visible-lg"></i></a>
-                <span class="hidden-xs"><a href="/appmgt/site/pages/index.jag">Application Cloud</a></span>
+                <span class="hidden-xs"><a href="/appmgt/site/pages/index.jag">integration Cloud</a></span>
             </div>
         </div>
     </div>
